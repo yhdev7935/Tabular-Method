@@ -1,2 +1,2 @@
-## ** 2020-01 Digital Logic Design / Tabular Method **
+## 2020-01 Digital Logic Design / Tabular Method
 
