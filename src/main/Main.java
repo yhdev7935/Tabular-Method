@@ -15,6 +15,7 @@ public class Main {
 	public static int mintermSize;
 	public static int dcsize;
 	public static Minterm[] minterm;
+	public static Minterm[] origin_minterm;
 	public static ArrayList<Integer> dontCareNumbers = new ArrayList<Integer>();
 	public static Minterm[] notCombinedMinterm;
 	public static int[] Combined;
@@ -68,6 +69,11 @@ public class Main {
 			minterm[mintermSize + i].setDontCare(true);
 		}
 		
+		// origin minterms
+		origin_minterm = new Minterm[minterm.length];
+		for(int i = 0; i < minterm.length; i++)
+			origin_minterm[i] = minterm[i];
+		
 		// sorting
 		Collections.sort(dontCareNumbers);
 		minterm = Minterm.sort(minterm);
@@ -84,6 +90,19 @@ public class Main {
 		boolean flag = true;
 		while(flag)
 			flag = combineImplicants(flag);
+		
+		/* Step 2 ////////////////////////////////////////
+		 * Find Essential Prime Implicants
+		 */
+		System.out.println("######################################");
+		System.out.println("Step 2. Find Essential Prime Implicants");
+		System.out.println("######################################\n");
+		System.out.println("\n###############PI Table###############\n");
+		PITable pit = new PITable(notCombinedMinterm, origin_minterm, binarySize);
+		pit.show();
+		System.out.println("\n###############FIND EPI###############\n");
+		pit.findEPI();
+		pit.show();
 	}
 	
 	public static void findImplicants()
