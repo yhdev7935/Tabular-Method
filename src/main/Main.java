@@ -101,8 +101,34 @@ public class Main {
 		PITable pit = new PITable(notCombinedMinterm, origin_minterm, binarySize);
 		pit.show();
 		System.out.println("\n##############REMOVE EPI##############\n");
-		pit.findEPI();
+		boolean allEPI = pit.findEPI();
+		if(allEPI)
+		{
+			pit.printResult(); // 항상 성공함을 보장함.
+			return;
+		}
 		pit.show(true);
+		
+		/* Step 3 ////////////////////////////////////////
+		 * Minimum Cover
+		 */
+		System.out.println("######################################");
+		System.out.println("Step 3. Minimum Cover");
+		System.out.println("######################################\n");
+		System.out.println("\n###########Column Dominance###########\n");
+		pit.columnDominace();
+		pit.show(true);
+		System.out.println("\n#############Row Dominance############\n");
+		pit.rowDominace();
+		pit.show(true);
+		boolean validation = pit.printResult();
+		
+		if(validation == true) return;
+		else System.out.println("\n\nPrinting result failed. Need to use Petrick's Method.");
+		
+		/* Step 4 ////////////////////////////////////////
+		 * Petrick's Method
+		 */
 	}
 	
 	public static void findImplicants()
