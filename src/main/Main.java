@@ -100,9 +100,9 @@ public class Main {
 		System.out.println("\n###############PI Table###############\n");
 		PITable pit = new PITable(notCombinedMinterm, origin_minterm, binarySize);
 		pit.show();
-		System.out.println("\n###############FIND EPI###############\n");
+		System.out.println("\n##############REMOVE EPI##############\n");
 		pit.findEPI();
-		pit.show();
+		pit.show(true);
 	}
 	
 	public static void findImplicants()
