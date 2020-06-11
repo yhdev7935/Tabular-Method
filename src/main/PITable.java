@@ -1,6 +1,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -138,7 +139,7 @@ public class PITable {
 					
 					if(dominanced)
 					{
-						System.out.printf("cD: (%d dominates %d)\n", i, j);
+						//System.out.printf("cD: (%d dominates %d)\n", i, j);
 						ignore[i] = 1;
 					}
 				}
@@ -148,12 +149,43 @@ public class PITable {
 	
 	public void rowDominace()
 	{
+		// greedy solution
+		class tempPI implements Comparable<tempPI>{
+			int idx; int val;
+			
+			public tempPI(int i, int v) {
+				idx = i; val = v;
+			}
+			@Override
+			public int compareTo(tempPI o) {
+				
+				if(val < o.val) return -1;
+				else if(val == o.val) return 0;
+				else return 1;
+			}
+		};
+		
+		ArrayList<tempPI> tPI = new ArrayList<tempPI>();
 		for(int i = 0; i < PI.length; i++)
 		{
+			int ret = 0;
+			for(int j = 0; j < minterm.length; j++)
+				if(!minterm[j].isDontCare() && ignore[j] == 0)
+					if(table[i][j] == 1)
+						ret += 1;
+			tPI.add(new tempPI(i, ret));
+		}
+		Collections.sort(tPI);
+		
+		
+		Iterator<tempPI> tpi_itr = tPI.iterator();
+		while(tpi_itr.hasNext())
+		{
+			int i = tpi_itr.next().idx;
 			for(int j = 0; j < PI.length; j++)
 			{
 				if(i != j)
-				{
+				{	
 					boolean iempty = true;
 					boolean jempty = true;
 					boolean dominanced = true;
@@ -175,8 +207,7 @@ public class PITable {
 					if(dominanced)
 					{
 						System.out.printf("NEPI: P%d는 NEPI: P%d를 Dominance한다.\n", i, j);
-						EPI[i] = 1;
-						if(EPI[j] == 1) EPI[j] = 0;
+						EPI[i] = 1; EPI[j] = 0; // 쉽게 표기하기 위해 EPI라 표기
 					}
 				}
 			}
