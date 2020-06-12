@@ -1,9 +1,13 @@
 package main;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Queue;
 
 public class PITable {
 	
@@ -150,7 +154,8 @@ public class PITable {
 	public void rowDominace()
 	{
 		// greedy solution
-		class tempPI implements Comparable<tempPI>{
+		class tempPI implements Comparable<tempPI>
+		{
 			int idx; int val;
 			
 			public tempPI(int i, int v) {
@@ -206,7 +211,7 @@ public class PITable {
 					
 					if(dominanced)
 					{
-						System.out.printf("NEPI: P%d는 NEPI: P%d를 Dominance한다.\n", i, j);
+						//System.out.printf("NEPI: P%d는 NEPI: P%d를 Dominance한다.\n", i, j);
 						EPI[i] = 1; EPI[j] = 0; // 쉽게 표기하기 위해 EPI라 표기
 					}
 				}
@@ -250,5 +255,52 @@ public class PITable {
 		}
 		
 		return true;
+	}
+	
+	public void petrick()
+	{
+		int ret = 0; Deque<LogicExpression> dq = new LinkedList<LogicExpression>();
+		for(int i = 0; i < minterm.length; i++)
+		{
+			if(ignore[i] == 1) continue;
+			
+			ArrayList<Integer> numbers = new ArrayList<Integer>();
+			for(int j = 0; j < PI.length; j++)
+			{
+				// EPI인 PI를 탐색해야 하는것인가? => 있었으면 ignore[i]는 1이었을 것이므로 탐색할 필요가 없다.
+				if(EPI[j] == 1) continue;
+				if(table[j][i] == 1)
+					numbers.add(j);
+			}
+			
+			dq.addLast(new LogicExpression(numbers));
+		}
+		
+		LogicExpression.show(dq);
+		
+		while(dq.size() > 1)
+		{
+			LogicExpression exp1 = dq.getFirst(); dq.pop();
+			LogicExpression exp2 = dq.getFirst(); dq.pop();
+			dq.addFirst(LogicExpression.multiply(exp1, exp2));
+			LogicExpression.show(dq);
+		}
+		
+		// print Result
+		
+		System.out.print("F = ");
+		ArrayList<Integer> EPI_list = new ArrayList<Integer>();
+		for(int i = 0; i < PI.length; i++)
+			if(EPI[i] == 1)
+				EPI_list.add(i);
+		
+		Integer[] EPI_array = EPI_list.toArray(new Integer[EPI_list.size()]);
+		for(int i = 0; i < EPI_array.length; i++)
+			System.out.printf("P%d + ", EPI_array[i]);
+		
+		ArrayList<Integer> petrickresult = dq.getFirst().getShortestMinterm();
+		for(Iterator<Integer> it = petrickresult.iterator(); it.hasNext();)
+			System.out.printf("P%d", it.next());
+		
 	}
 }

@@ -21,8 +21,7 @@ public class Main {
 	public static int[] Combined;
 	
 	public static void main(String[] args)
-	{
-		
+	{	
 		System.out.println("Tabular Method");
 		
 		/* Input Code ////////////////////////////////////////
@@ -129,6 +128,15 @@ public class Main {
 		/* Step 4 ////////////////////////////////////////
 		 * Petrick's Method
 		 */
+		System.out.println("######################################");
+		System.out.println("Step 4. Petrick's Method");
+		System.out.println("######################################\n");
+		System.out.println("\n################Before################\n");
+		pit.show(); // don't care 마저 보여주기
+		System.out.println("\n################After#################\n");
+		pit.petrick();
+		
+		
 	}
 	
 	public static void findImplicants()
