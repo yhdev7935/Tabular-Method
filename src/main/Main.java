@@ -100,10 +100,10 @@ public class Main {
 		PITable pit = new PITable(notCombinedMinterm, origin_minterm, binarySize);
 		pit.show();
 		System.out.println("\n##############REMOVE EPI##############\n");
-		boolean allEPI = pit.findEPI();
-		if(allEPI)
+		pit.findEPI();
+		if(pit.mintermValidation())
 		{
-			pit.printResult(); // 항상 성공함을 보장함.
+			pit.printResult();
 			return;
 		}
 		pit.show(true);
@@ -120,9 +120,12 @@ public class Main {
 		System.out.println("\n#############Row Dominance############\n");
 		pit.rowDominace();
 		pit.show(true);
-		boolean validation = pit.printResult();
-		
-		if(validation == true) return;
+		boolean validation = pit.mintermValidation();
+		if(validation == true)
+		{
+			pit.printResult();
+			return;
+		}
 		else System.out.println("\n\nPrinting result failed. Need to use Petrick's Method.");
 		
 		/* Step 4 ////////////////////////////////////////

@@ -66,7 +66,7 @@ public class PITable {
 		}
 	}
 	
-	public boolean findEPI()
+	public void findEPI()
 	{
 		for(int i = 0; i < minterm.length; i++)
 		{
@@ -89,16 +89,6 @@ public class PITable {
 			if(EPI[i] == 1)
 				System.out.printf("P%d ", i);
 		System.out.println();
-			
-		// 모두 ignore일 때
-		for(int i = 0; i < minterm.length; i++)
-		{
-			if(minterm[i].isDontCare()) continue;
-			if(ignore[i] == 0)
-				return false;
-		}
-	
-		return true; 
 	}
 	
 	public void show()
@@ -226,7 +216,7 @@ public class PITable {
 					
 					if(dominanced)
 					{
-						//System.out.printf("NEPI: P%d는 NEPI: P%d를 Dominance한다.\n", i, j);
+						System.out.printf("NEPI: P%d는 NEPI: P%d를 Dominance한다.\n", i, j);
 						EPI[i] = 1; EPI[j] = 0; // 쉽게 표기하기 위해 EPI라 표기 , setEPI를 쓰지 않는다.
 					}
 				}
@@ -236,9 +226,8 @@ public class PITable {
 		refreshAllEPI(); // ignore에 등록하기 위해서
 	}
 	
-	public boolean printResult()
+	public boolean mintermValidation()
 	{
-		// Result Validation
 		int[] validation = new int[minterm.length];
 		for(int i = 0; i < PI.length; i++)
 		{
@@ -257,6 +246,11 @@ public class PITable {
 				return false; // 실패 한것 => Petrick's Method로 해야함
 		}
 		
+		return true;
+	}
+	
+	public void printResult()
+	{
 		// print Result
 		System.out.print("F = ");
 		ArrayList<Integer> EPI_list = new ArrayList<Integer>();
@@ -270,8 +264,6 @@ public class PITable {
 			System.out.printf("P%d", EPI_array[i]);
 			if(i != EPI_array.length - 1) System.out.print(" + ");
 		}
-		
-		return true;
 	}
 	
 	public void petrick()
