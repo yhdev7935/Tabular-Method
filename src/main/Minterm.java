@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
 public class Minterm implements Comparable<Minterm>{
 	
@@ -47,8 +45,7 @@ public class Minterm implements Comparable<Minterm>{
 		for(int i = 0; i < m1.getTermsNumber().size(); i++)
 			hs.add(m1.getTermsNumber().get(i));
 		
-		Iterator<Integer> hs_iter = hs.iterator();
-		while(hs_iter.hasNext()) termNumber.add(hs_iter.next());
+		for(Integer val : hs) termNumber.add(val);
 		
 		Collections.sort(termNumber);
 	}

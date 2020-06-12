@@ -1,13 +1,10 @@
 package main;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Queue;
 
 public class PITable {
 	
@@ -39,31 +36,23 @@ public class PITable {
 			map.put(minterm[i].getTermsNumber().get(0), i);
 		
 		for(int i = 0; i < PI.length; i++)
-		{
-			Iterator<Integer> it = PI[i].getTermsNumber().iterator();
-			while(it.hasNext()) table[i][map.get(it.next())] = 1;
-		}
+			for(Integer val : PI[i].getTermsNumber())
+				table[i][map.get(val)] = 1;
 	}
 	
 	public void setEPI(int loc)
 	{
 		EPI[loc] = 1;
-		Minterm epi_minterm = PI[loc];
-		Iterator<Integer> it = epi_minterm.getTermsNumber().iterator();
-		while(it.hasNext()) ignore[map.get(it.next())] = 1;
+		for(Integer val : PI[loc].getTermsNumber())
+			ignore[map.get(val)] = 1;
 	}
 	
 	public void refreshAllEPI()
 	{
 		for(int loc = 0; loc < PI.length; loc++)
-		{
 			if(EPI[loc] == 1)
-			{
-				Minterm epi_minterm = PI[loc];
-				Iterator<Integer> it = epi_minterm.getTermsNumber().iterator();
-				while(it.hasNext()) ignore[map.get(it.next())] = 1;
-			}
-		}
+				for(Integer val : PI[loc].getTermsNumber())
+					ignore[map.get(val)] = 1;
 	}
 	
 	public void findEPI()
@@ -188,10 +177,10 @@ public class PITable {
 		Collections.sort(tPI);
 		
 		
-		Iterator<tempPI> tpi_itr = tPI.iterator();
-		while(tpi_itr.hasNext())
+
+		for(tempPI tPIv : tPI)
 		{
-			int i = tpi_itr.next().idx;
+			int i = tPIv.idx;
 			for(int j = 0; j < PI.length; j++)
 			{
 				if(i != j)
@@ -230,14 +219,9 @@ public class PITable {
 	{
 		int[] validation = new int[minterm.length];
 		for(int i = 0; i < PI.length; i++)
-		{
 			if(EPI[i] == 1)
-			{
-				Minterm term = PI[i];
-				Iterator<Integer> it = term.getTermsNumber().iterator();
-				while(it.hasNext()) validation[map.get(it.next())] = 1;
-			}
-		}
+				for(Integer val : PI[i].getTermsNumber()) 
+					validation[map.get(val)] = 1;
 		
 		for(int i = 0; i < validation.length; i++)
 		{
@@ -268,7 +252,7 @@ public class PITable {
 	
 	public void petrick()
 	{
-		int ret = 0; Deque<LogicExpression> dq = new LinkedList<LogicExpression>();
+		Deque<LogicExpression> dq = new LinkedList<LogicExpression>();
 		for(int i = 0; i < minterm.length; i++)
 		{
 			if(ignore[i] == 1) continue;
@@ -303,13 +287,11 @@ public class PITable {
 			if(EPI[i] == 1)
 				EPI_list.add(i);
 		
-		Integer[] EPI_array = EPI_list.toArray(new Integer[EPI_list.size()]);
-		for(int i = 0; i < EPI_array.length; i++)
-			System.out.printf("P%d + ", EPI_array[i]);
+		for(Integer val : EPI_list)
+			System.out.printf("P%d + ", val);
 		
-		ArrayList<Integer> petrickresult = dq.getFirst().getShortestMinterm();
-		for(Iterator<Integer> it = petrickresult.iterator(); it.hasNext();)
-			System.out.printf("P%d", it.next());
+		for(Integer val : dq.getFirst().getShortestMinterm())
+			System.out.printf("P%d", val);
 		
 	}
 }
