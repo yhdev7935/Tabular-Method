@@ -45,6 +45,27 @@ public class PITable {
 		}
 	}
 	
+	public void setEPI(int loc)
+	{
+		EPI[loc] = 1;
+		Minterm epi_minterm = PI[loc];
+		Iterator<Integer> it = epi_minterm.getTermsNumber().iterator();
+		while(it.hasNext()) ignore[map.get(it.next())] = 1;
+	}
+	
+	public void refreshAllEPI()
+	{
+		for(int loc = 0; loc < PI.length; loc++)
+		{
+			if(EPI[loc] == 1)
+			{
+				Minterm epi_minterm = PI[loc];
+				Iterator<Integer> it = epi_minterm.getTermsNumber().iterator();
+				while(it.hasNext()) ignore[map.get(it.next())] = 1;
+			}
+		}
+	}
+	
 	public boolean findEPI()
 	{
 		for(int i = 0; i < minterm.length; i++)
@@ -59,13 +80,7 @@ public class PITable {
 					last_location = j;
 				}
 			if(check == 1)
-			{
-				//System.out.println("EPI: P" + last_location);
-				EPI[last_location] = 1;
-				Minterm epi_minterm = PI[last_location];
-				Iterator<Integer> it = epi_minterm.getTermsNumber().iterator();
-				while(it.hasNext()) ignore[map.get(it.next())] = 1;
-			}
+				setEPI(last_location);
 		}
 		
 		// EPI print
@@ -212,11 +227,13 @@ public class PITable {
 					if(dominanced)
 					{
 						//System.out.printf("NEPI: P%d는 NEPI: P%d를 Dominance한다.\n", i, j);
-						EPI[i] = 1; EPI[j] = 0; // 쉽게 표기하기 위해 EPI라 표기
+						EPI[i] = 1; EPI[j] = 0; // 쉽게 표기하기 위해 EPI라 표기 , setEPI를 쓰지 않는다.
 					}
 				}
 			}
 		}
+		
+		refreshAllEPI(); // ignore에 등록하기 위해서
 	}
 	
 	public boolean printResult()
