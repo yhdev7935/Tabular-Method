@@ -22,7 +22,7 @@ public class Minterm implements Comparable<Minterm>{
 		{
 			String s = "";
 			for(int i = 0; i < binarySize - term.length(); i++) s += "0";
-			term += s;
+			term = s + term;
 		}
 	}
 	
