@@ -21,9 +21,8 @@ public class Minterm implements Comparable<Minterm>{
 		if(term.length() != binarySize)
 		{
 			String s = "";
-			for(int i = 0; i < binarySize - term.length(); i++)
-				s += "0";
-			term = s + term;
+			for(int i = 0; i < binarySize - term.length(); i++) s += "0";
+			term += s;
 		}
 	}
 	
@@ -99,8 +98,7 @@ public class Minterm implements Comparable<Minterm>{
 	public int sumOfTermsNumber()
 	{
 		int ret = 0;
-		for(int i = 0; i < termNumber.size(); i++)
-			ret += termNumber.get(i);
+		for(Integer v : termNumber) ret += v;
 		return ret;
 	}
 	
@@ -157,8 +155,8 @@ public class Minterm implements Comparable<Minterm>{
 	
 	public static int getIndexOfMintermGroups(Minterm[] minterms, int ones, int idx)
 	{
-		int ret = 0; int i;
-		for(i = 0; i < minterms.length; i++)
+		int ret = 0;
+		for(int i = 0; i < minterms.length; i++)
 		{
 			if(minterms[i].getNumberOfOnes() == ones)
 			{

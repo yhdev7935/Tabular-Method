@@ -68,8 +68,7 @@ public class PITable {
 					check += 1;
 					last_location = j;
 				}
-			if(check == 1)
-				setEPI(last_location);
+			if(check == 1) setEPI(last_location);
 		}
 		
 		// EPI print
@@ -135,11 +134,7 @@ public class PITable {
 						}
 					}
 					
-					if(dominanced)
-					{
-						//System.out.printf("cD: (%d dominates %d)\n", i, j);
-						ignore[i] = 1;
-					}
+					if(dominanced) ignore[i] = 1;
 				}
 			}
 		}
@@ -152,11 +147,14 @@ public class PITable {
 		{
 			int idx; int val;
 			
-			public tempPI(int i, int v) {
+			public tempPI(int i, int v)
+			{
 				idx = i; val = v;
 			}
+			
 			@Override
-			public int compareTo(tempPI o) {
+			public int compareTo(tempPI o)
+			{
 				
 				if(val < o.val) return -1;
 				else if(val == o.val) return 0;

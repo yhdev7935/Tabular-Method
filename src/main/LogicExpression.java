@@ -26,11 +26,10 @@ public class LogicExpression {
 		//System.out.println("SOP Check: " + SOP.toString());
 		// ArrayList + ArrayList + ArrayList 이 하나의 expression를 구성한다.
 		// 이 Constructor에서는 각 ArrayList의 size가 1이다. 그러한 size가 1인 ArrayList를 SOP에 담은 것이다.
-		Iterator<Integer> it = SOP.iterator();
-		while(it.hasNext())
+		for(Integer v : SOP)
 		{
 			ArrayList<Integer> number = new ArrayList<Integer>();
-			number.add(it.next());
+			number.add(v);
 			exp.add(number);
 		}
 	}
@@ -52,8 +51,7 @@ public class LogicExpression {
 	public static void show(Deque<LogicExpression> dq)
 	{
 		System.out.print("F(with NEPIs) = ");
-		for(Iterator<LogicExpression> it = dq.iterator(); it.hasNext();)
-			it.next().show();
+		for(LogicExpression v : dq) v.show();
 		System.out.println();
 	}
 	
@@ -99,17 +97,9 @@ public class LogicExpression {
 	{
 		LogicExpression ret = new LogicExpression();
 		
-		Iterator<ArrayList<Integer>> exp1_it = exp1.getExp().iterator();
-		while(exp1_it.hasNext())
-		{
-			ArrayList<Integer> exp1_v = exp1_it.next();
-			Iterator<ArrayList<Integer>> exp2_it = exp2.getExp().iterator();
-			while(exp2_it.hasNext())
-			{
-				ArrayList<Integer> exp2_v = exp2_it.next();
+		for(ArrayList<Integer> exp1_v : exp1.getExp())
+			for(ArrayList<Integer> exp2_v : exp2.getExp())
 				ret.add(multiply(exp1_v, exp2_v));
-			}
-		}
 		ret.sort();
 		
 		ret.minimize();
@@ -119,12 +109,9 @@ public class LogicExpression {
 	private static ArrayList<Integer> multiply(ArrayList<Integer> a, ArrayList<Integer> b)
 	{
 		HashSet<Integer> set = new HashSet<Integer>();
-		Iterator<Integer> ai = a.iterator();
-		Iterator<Integer> bi = b.iterator();
-		while(ai.hasNext())
-			set.add(ai.next());
-		while(bi.hasNext())
-			set.add(bi.next());
+
+		for(Integer v : a) set.add(v);
+		for(Integer v : b) set.add(v);
 		
 		return new ArrayList<Integer>(set);
 	}
@@ -140,8 +127,8 @@ public class LogicExpression {
 		ArrayList<Integer> expArray[] = exp.toArray(new ArrayList[exp.size()]);
 		for(int i = 0; i < expArray.length; i++)
 			for(int j = 0; j < expArray.length; j++)
-				if(i != j)
-					if(expArray[j].containsAll(expArray[i])) removeSet.add(expArray[j]);
+				if(i != j && expArray[j].containsAll(expArray[i]))
+					removeSet.add(expArray[j]);
 
 		for(ArrayList<Integer> remove : removeSet)
 			exp.remove(remove);
