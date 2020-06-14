@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashSet;
-import java.util.Iterator;
 
 public class LogicExpression {
 
@@ -57,18 +56,12 @@ public class LogicExpression {
 	
 	public ArrayList<Integer> getShortestMinterm()
 	{
-		int minimumLength = 0x7FFFFFFF; int idx = -1;
-		ArrayList<Integer> expArray[] = exp.toArray(new ArrayList[exp.size()]);
-		for(int i = 0; i < expArray.length; i++)
-		{
-			if(minimumLength > expArray[i].size())
-			{
-				minimumLength = expArray[i].size();
-				idx = i;
-			}
-		}
+		ArrayList<Integer> min = exp.size() == 0 ? null : exp.get(0);
+		for(ArrayList<Integer> v : exp)
+			if(min.size() > v.size())
+				min = v;
 		
-		return expArray[idx];
+		return min;
 	}
 	
 	public ArrayList<ArrayList<Integer>> getExp()
@@ -122,15 +115,15 @@ public class LogicExpression {
 		 * X + X 도 내포되어 있고, X * X 는 multiply() 과정에서 제거
 		 */
 		
-		ArrayList<ArrayList<Integer>> removeSet = new ArrayList<ArrayList<Integer>>();
+		ArrayList<ArrayList<Integer>> removeArray = new ArrayList<ArrayList<Integer>>();
 		
 		ArrayList<Integer> expArray[] = exp.toArray(new ArrayList[exp.size()]);
 		for(int i = 0; i < expArray.length; i++)
 			for(int j = 0; j < expArray.length; j++)
 				if(i != j && expArray[j].containsAll(expArray[i]))
-					removeSet.add(expArray[j]);
+					removeArray.add(expArray[j]);
 
-		for(ArrayList<Integer> remove : removeSet)
+		for(ArrayList<Integer> remove : removeArray)
 			exp.remove(remove);
 		
 	}

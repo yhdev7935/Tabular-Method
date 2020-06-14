@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 
 public class Minterm implements Comparable<Minterm>{
 	
@@ -148,9 +149,8 @@ public class Minterm implements Comparable<Minterm>{
 	public static Minterm[] sort(Minterm[] minterms)
 	{
 		if(minterms == null || minterms.length == 0) return minterms;
-		ArrayList<Minterm> mL = new ArrayList<Minterm>(Arrays.asList(minterms));
-		Collections.sort(mL);
-		return mL.toArray(new Minterm[mL.size()]);
+		Arrays.sort(minterms);
+		return minterms;
 	}
 	
 	public static int getIndexOfMintermGroups(Minterm[] minterms, int ones, int idx)

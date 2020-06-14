@@ -229,8 +229,8 @@ public class Main {
 	public static int countCombinedImplicants()
 	{
 		int ret = 0;
-		for(int i = 0; i < Combined.length; i++)
-			if(Combined[i] == 1)
+		for(int v : Combined)
+			if(v == 1)
 				ret += 1;
 		return ret;
 	}

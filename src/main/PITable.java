@@ -92,7 +92,7 @@ public class PITable {
 		{
 			if(dontcare && minterm[i].isDontCare()) continue;
 			if(ignore[i] == 0) // epi이면 무시
-					System.out.printf("|%02d", minterm[i].getTermsNumber().get(0)); // minterm은 명백히 TermNumber가 1개 있다.
+				System.out.printf("|%02d", minterm[i].getTermsNumber().get(0)); // minterm은 명백히 TermNumber가 1개 있다.
 		}
 		System.out.println("");
 		
@@ -280,13 +280,9 @@ public class PITable {
 		// print Result
 		
 		System.out.print("F = ");
-		ArrayList<Integer> EPI_list = new ArrayList<Integer>();
 		for(int i = 0; i < PI.length; i++)
 			if(EPI[i] == 1)
-				EPI_list.add(i);
-		
-		for(Integer val : EPI_list)
-			System.out.printf("P%d + ", val);
+				System.out.printf("P%d + ", i);
 		
 		for(Integer val : dq.getFirst().getShortestMinterm())
 			System.out.printf("P%d", val);
