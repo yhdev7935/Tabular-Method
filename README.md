@@ -4,11 +4,8 @@
 ### 각 클래스의 용도
 
 - **Minterm 클래스**는 각각의 minterm를 다루기 위해 만들어진 클래스입니다. 또한, Don't Care도 포함한다.
-<br>
 - **PITable 클래스**는 각각의 minterm를 합치고 더이상 합칠 수 없는 minterm들을 가지고 Pi Table를 구성합니다.
-<br>
 - **LogicExpression 클래스**는 PiTable에서 EPI를 제거하고, Row/Column Dominance까지 진행한 후에도 결과를 도출할 수 없을 때, Petrick's Method를 사용하기 위해 만들어진 클래스입니다.
-<br>
 - **Main 클래스**는 Minterm, PITable, LogicExpression 클래스들을 가지고 **Quine–McCluskey Algorithm**를 구현하는 과정을 보여줍니다.
 
 
