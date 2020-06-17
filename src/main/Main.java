@@ -163,7 +163,8 @@ public class Main {
 		Combined = new int[minterm.length];
 		int max_ones = minterm[minterm.length - 1].getNumberOfOnes();
 		
-		ArrayList<Minterm> CombinedMinterm = new ArrayList<Minterm>(); HashSet<String> duplicate = new HashSet<String>();
+		ArrayList<Minterm> CombinedMinterm = new ArrayList<Minterm>();
+		HashSet<String> duplicate = new HashSet<String>();
 		for(int i = 0; i < max_ones; i++)
 		{
 			Minterm[] minterms_a = Minterm.getMinterms(minterm, i);
@@ -174,10 +175,6 @@ public class Main {
 				{
 					Minterm minterm_ai = minterms_a[ai];
 					Minterm minterm_bi = minterms_b[bi];
-					//System.out.printf("합치기중... %s[idx: %d] + %s[idx: %d] , HD: %d\n", minterm_ai.toString(),
-					//		Minterm.getIndexOfMintermGroups(minterm, i, ai), minterm_bi.toString(),
-					//		Minterm.getIndexOfMintermGroups(minterm, i + 1, bi),
-					//		Minterm.getHammingDistance(minterm_ai, minterm_bi));
 					if(Minterm.getHammingDistance(minterm_ai, minterm_bi) == 1)
 					{
 						escape = true;
@@ -202,7 +199,8 @@ public class Main {
 				duplicate.add(minterm[i].toString());
 				
 				ArrayList<Minterm> mL;
-				if(notCombinedMinterm != null && notCombinedMinterm.length != 0) mL = new ArrayList<Minterm>(Arrays.asList(notCombinedMinterm));
+				if(notCombinedMinterm != null && notCombinedMinterm.length != 0)
+					mL = new ArrayList<Minterm>(Arrays.asList(notCombinedMinterm));
 				else mL = new ArrayList<Minterm>();
 				mL.add(minterm[i]);
 				notCombinedMinterm = mL.toArray(new Minterm[mL.size()]);

@@ -203,7 +203,7 @@ public class PITable {
 					
 					if(dominanced)
 					{
-						System.out.printf("NEPI: P%d는 NEPI: P%d를 Dominance한다.\n", i, j);
+						System.out.printf("NEPI: P%d는 P%d를 Dominance한다.\n", i, j);
 						EPI[i] = 1; EPI[j] = 0; // 쉽게 표기하기 위해 EPI라 표기 , setEPI를 쓰지 않는다.
 					}
 				}
