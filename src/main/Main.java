@@ -193,20 +193,20 @@ public class Main {
 		}
 		
 		duplicate = new HashSet<String>();
+		
+		ArrayList<Minterm> mL;
+		if(notCombinedMinterm != null && notCombinedMinterm.length != 0)
+			mL = new ArrayList<Minterm>(Arrays.asList(notCombinedMinterm));
+		else mL = new ArrayList<Minterm>();
+		
 		for(int i = 0; i < minterm.length; i++)
 			if(Combined[i] == 0 && !duplicate.contains(minterm[i].toString()))
 			{
 				duplicate.add(minterm[i].toString());
-				
-				ArrayList<Minterm> mL;
-				if(notCombinedMinterm != null && notCombinedMinterm.length != 0)
-					mL = new ArrayList<Minterm>(Arrays.asList(notCombinedMinterm));
-				else mL = new ArrayList<Minterm>();
 				mL.add(minterm[i]);
-				notCombinedMinterm = mL.toArray(new Minterm[mL.size()]);
 			}
 		
-		Minterm.sort(notCombinedMinterm);
+		notCombinedMinterm = mL.toArray(new Minterm[mL.size()]);
 		
 		if(escape == false) return false;
 		
